@@ -60,22 +60,25 @@ namespace ВесыУдалениеТоваров
             public string temperature_info { get; set; }
             public string used_by_days { get; set; }
         }
+        List<RootObject> result;
 
         public Form1()
         {
             InitializeComponent();
         }
-        //string Delete = @"curl -X DELETE --data ""{""productNumbers"":""{NUMBER}""}"" ""http://{IP}:1235/products""";
+        
         private void Form1_Load(object sender, EventArgs e)
         {
                                  
         }
 
+        // curl аналог - "curl -X DELETE --data ""{""productNumbers"":""{NUMBER}""}"" ""http://{IP}:1235/products""";
         private void button1_Click(object sender, EventArgs e)
         {
             if (PLU_TB.Text == "") return;
             try
             {
+                //Request
                 string url = $"http://{IP_TB.Text}:1235/products";
                 System.Net.WebRequest req = System.Net.WebRequest.Create(url);
                 req.Timeout = 5000;
@@ -83,15 +86,15 @@ namespace ВесыУдалениеТоваров
 
                 System.IO.Stream stream2 = req.GetRequestStream();
 
+                //json content
                 string data_str = @"{""productNumbers"":""{NUM}""}";
                 data_str = data_str.Replace("{NUM}", PLU_TB.Text);
-
+                //Write
                 var data = Encoding.ASCII.GetBytes(data_str);
                 stream2.Write(data, 0, data.Length);
-
+                //Response
                 System.Net.WebResponse resp = req.GetResponse();
                 System.IO.Stream stream = resp.GetResponseStream();
-
                 System.IO.StreamReader sr = new System.IO.StreamReader(stream);
                 OUT_TB.Text = sr.ReadToEnd();
             }
@@ -102,6 +105,7 @@ namespace ВесыУдалениеТоваров
             GET_R();
         }
 
+        //get all products
         public void GET_R()
         {
             try
@@ -126,17 +130,11 @@ namespace ВесыУдалениеТоваров
                 OUT_TB.AppendText("GET: " + ex.Message + Environment.NewLine);
             }
         }
-
-        List<RootObject> result;
+       
         private void button3_Click(object sender, EventArgs e)
         {
             GET_R();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-           
-        }
+        }               
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
