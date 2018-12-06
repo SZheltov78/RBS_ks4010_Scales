@@ -15,7 +15,7 @@ namespace ВесыУдалениеТоваров
     public partial class Form1 : Form
     {
 
-        public class RootObject
+        public class RootObject // сгенерировать класс http://json2csharp.com/
         {
             public string abbr_sort { get; set; }
             public string barcode { get; set; }

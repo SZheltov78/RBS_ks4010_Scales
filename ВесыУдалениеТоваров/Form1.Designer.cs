@@ -48,7 +48,6 @@
             this.IP_TB.Name = "IP_TB";
             this.IP_TB.Size = new System.Drawing.Size(136, 20);
             this.IP_TB.TabIndex = 0;
-            this.IP_TB.Text = "10.252.132.198";
             // 
             // label1
             // 
